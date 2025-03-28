@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id:  create-table-wallets
+      author:  Dmitriy
+      comment: first liquibase migration
+      changes:
+        - createTable:
+            tableName:  wallets
+            columns:
+              - column:
+                  name:  wallet_id
+                  type:  uuid
+                  autoIncrement:  false
+                  constraints:
+                    primaryKey:  true
+                    nullable:  false
+
+              - column:
+                  name:  amount
+                  type:  bigint
+                  constraints:
+                    nullable:  false
