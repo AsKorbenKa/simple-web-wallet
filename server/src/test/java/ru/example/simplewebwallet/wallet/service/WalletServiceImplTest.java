@@ -13,7 +13,6 @@ import ru.example.simplewebwallet.wallet.WalletController;
 import ru.example.simplewebwallet.wallet.dto.WalletDto;
 import ru.example.simplewebwallet.wallet.dto.WalletShortDto;
 import ru.example.simplewebwallet.wallet.enums.OperationType;
-import ru.example.simplewebwallet.wallet.model.Wallet;
 
 import java.util.UUID;
 
@@ -31,34 +30,26 @@ class WalletServiceImplTest {
     }
 
     @Test
-    @DisplayName("Test create new wallet.")
-    void createWalletTest() {
-        Wallet createdWallet = walletController.createWallet();
-
-        assertEquals(0L, createdWallet.getAmount());
-        assertNotNull(createdWallet.getWalletId());
-    }
-
-    @Test
     @DisplayName("Test deposit and withdraw funds.")
     void depositAndWithdrawFundsTest() {
-        Wallet createdWallet = walletController.createWallet();
-        WalletDto walletDto = new WalletDto(createdWallet.getWalletId(), OperationType.DEPOSIT, 1234L);
+        WalletDto walletDto = new WalletDto(UUID.fromString("22b623ab-2675-45c9-b8fd-c3e0a44f2e04"),
+                OperationType.DEPOSIT, 1234L);
         WalletShortDto changedWallet = walletController.addOrWithdrawMoney(walletDto);
 
-        assertEquals(1234L, changedWallet.getAmount());
+        assertEquals(2345L, changedWallet.getAmount());
 
-        WalletDto anotherWalletDto = new WalletDto(createdWallet.getWalletId(), OperationType.WITHDRAW, 100L);
+        WalletDto anotherWalletDto = new WalletDto(UUID.fromString("22b623ab-2675-45c9-b8fd-c3e0a44f2e04"),
+                OperationType.WITHDRAW, 100L);
         WalletShortDto changedWallet2 = walletController.addOrWithdrawMoney(anotherWalletDto);
 
-        assertEquals(1134L, changedWallet2.getAmount());
+        assertEquals(2245L, changedWallet2.getAmount());
     }
 
     @Test
     @DisplayName("Test withdraw funds when insufficient funds.")
     void withdrawWhenInsufficientFundsThenTrowExceptionTest() {
-        Wallet createdWallet = walletController.createWallet();
-        WalletDto walletDto = new WalletDto(createdWallet.getWalletId(), OperationType.WITHDRAW, 100L);
+        WalletDto walletDto = new WalletDto(UUID.fromString("22b623ab-2675-45c9-b8fd-c3e0a44f2e04"),
+                OperationType.WITHDRAW, 10000L);
 
         InsufficientFundsException e = assertThrows(InsufficientFundsException.class, () ->
                 walletController.addOrWithdrawMoney(walletDto));
@@ -69,11 +60,10 @@ class WalletServiceImplTest {
     @Test
     @DisplayName("Test get wallet by id.")
     void getWalletDataWhenExistsTest() {
-        Wallet createdWallet = walletController.createWallet();
-        WalletShortDto walletShortDto = walletController.getWalletData(createdWallet.getWalletId());
+        WalletShortDto walletShortDto = walletController.getWalletData(
+                UUID.fromString("b8ad159a-c5b2-4cf1-9728-ede1ab0f4434"));
 
-        assertNotNull(walletShortDto);
-        assertEquals(createdWallet.getAmount(), walletShortDto.getAmount());
+        assertEquals(2222L, walletShortDto.getAmount());
     }
 
     @Test

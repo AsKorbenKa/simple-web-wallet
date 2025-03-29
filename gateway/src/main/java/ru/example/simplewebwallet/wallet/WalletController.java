@@ -17,12 +17,6 @@ public class WalletController {
     private final WalletClient walletClient;
 
     @PostMapping
-    public ResponseEntity<Object> createWallet() {
-        log.debug("Создаем новый кошелек.");
-        return walletClient.createWallet();
-    }
-
-    @PatchMapping
     public ResponseEntity<Object> addOrWithdrawMoney(@Valid @RequestBody WalletDto walletDto) {
         log.debug("Обновляем данные кошелька {}", walletDto);
         return walletClient.addOrWithdrawMoney(walletDto);

@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-test-data
+      author: Dmitriy
+      changes:
+        - insert:
+            tableName: wallets
+            columns:
+              - column:
+                  name: wallet_id
+                  value: '22b623ab-2675-45c9-b8fd-c3e0a44f2e04'
+              - column:
+                  name: amount
+                  value: '1111'
+        - insert:
+            tableName: wallets
+            columns:
+              - column:
+                  name: wallet_id
+                  value: 'b8ad159a-c5b2-4cf1-9728-ede1ab0f4434'
+              - column:
+                  name: amount
+                  value: '2222'
