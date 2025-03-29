@@ -24,13 +24,6 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     @Transactional
-    public Wallet createWallet() {
-        log.debug("Добавляем новый кошелек в базу данных.");
-        return walletRepository.save(new Wallet(UUID.randomUUID(), 0L));
-    }
-
-    @Override
-    @Transactional
     public WalletShortDto addOrWithdrawMoney(WalletDto walletDto) {
         log.debug("Изменяем данные кошелька {}", walletDto);
         WalletShortDto wallet = getWalletData(walletDto.getWalletId());

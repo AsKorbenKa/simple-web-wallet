@@ -26,12 +26,8 @@ public class WalletClient extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> createWallet() {
-        return post("", null);
-    }
-
     public ResponseEntity<Object> addOrWithdrawMoney(WalletDto walletDto) {
-        return patch("", walletDto);
+        return post("", walletDto);
     }
 
     public ResponseEntity<Object> getWalletData(UUID walletId) {
